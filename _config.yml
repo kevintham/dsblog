@@ -40,7 +40,7 @@ avatar: assets/images/avatar.jpg
 
 # You'll want to customize url and baseurl for your own site:
 baseurl: "/dsblog" # the subpath of your site, e.g. /blog
-url: "localhost:4000" # the base hostname & protocol for your site
+url: "https://kevintham.github.io" # the base hostname & protocol for your site
 
 # Social settings
 facebook_url:
