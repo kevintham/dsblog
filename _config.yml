@@ -30,8 +30,8 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Data Science Portfolio 
-subtitle: A work in progress
+title: Kevin Tham 
+subtitle: 
 description: >- # this means to ignore newlines until "baseurl:"
   This is a blog to showcase my skills in data science.
 author: Kevin Tham
@@ -43,11 +43,11 @@ baseurl: "/dsblog" # the subpath of your site, e.g. /blog
 url: "https://kevintham.github.io" # the base hostname & protocol for your site
 
 # Social settings
-facebook_url:
-github_url:
+facebook_url: 
+github_url: https://github.com/kevintham
 googleplus_url:
 instagram_url:
-linkedin_url:
+linkedin_url: https://www.linkedin.com/in/kevintham91/
 pinterest_url:
 slack_url:
 twitter_url:
