@@ -1,3 +1,8 @@
+---
+layout: blog
+title: Backpropagation
+author: Kevin Tham
+---
 
 # Vectorized Implementation of an Artificial Neural Network (ANN) and its application to a simple artificial dataset: Part 1
   
