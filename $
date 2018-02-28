@@ -1,5 +1,5 @@
 ---
-title: Backpropagation
+itle: Backpropagation
 author: Kevin Tham
 layout: post
 ---
@@ -14,11 +14,11 @@ Artificial Neural Networks are a computational model that have been inspired by 
 
 ### Objectives of ANNs
 
-Before we move into the details of what ANNs actually are and how they work, we will first clarify how they are applied. A major application of ANNs is in supervised learning, where one requires an algorithm that predicts an outcome based on a given set of data. More concretely, we are given a set of data \\(X\\) we will call the "training data", and a set of targets \\(Y\\). For example, \\(X\\) can be a set of data consisting of handwritten digits, and \\(Y\\) can be a set of numbers labelling the corresponding digit, with the objective being to devise an algorithm to classify a set of unseen handwritten digits according to the correct number. In other words, we want to find the function \\(f\\) such that:
+Before we move into the details of what ANNs actually are and how they work, we will first clarify how they are applied. A major application of ANNs is in supervised learning, where one requires an algorithm that predicts an outcome based on a given set of data. More concretely, we are given a set of data \(X\) we will call the "training data", and a set of targets \(Y\). For example, \(X\) can be a set of data consisting of handwritten digits, and \(Y\) can be a set of numbers labelling the corresponding digit, with the objective being to devise an algorithm to classify a set of unseen handwritten digits according to the correct number. In other words, we want to find the function \(f\) such that:
 
 $$Y = f(X)$$
 
-The supervised learning algorithm thus aims to produce a function \\(\hat{f}\\) that is a good approximation of \\(f\\), such that it produces an output \\(\hat{Y} = \hat{f}(X)\\) that is "close" to the actual target \\(Y\\), loosely speaking. Finding an appropriate function that minimizes the "distance" from the actual target is therefore an optimisation problem which will be elaborated upon later. This process is referred to as "training" the neural network on the training dataset that one provides. 
+The supervised learning algorithm thus aims to produce a function \(\hat{f}\) that is a good approximation of \(f\), such that it produces an output \(\hat{Y} = \hat{f}(X)\) that is "close" to the actual target \(Y\), loosely speaking. Finding an appropriate function that minimizes the "distance" from the actual target is therefore an optimisation problem which will be elaborated upon later. This process is referred to as "training" the neural network on the training dataset that one provides. 
 
 ### A single Neuron
 
@@ -27,13 +27,13 @@ In biological neural networks, the neurons themselves are the basic unit of comp
 {% include image.html name="neuron.png" caption="A single neuron" %}   
 Output: $$y = f(z) = f(x_{1}w_{1}+x_{2}w_{2}+b)$$ 
 
-In most applications, a node will then take a linear combination of inputs \\(z = x_{1}w_{1}+x_{2}w_{2}+b\\), including a bias term \\(b\\), and apply a nonlinear activation function on the linear combination to produce an output as shown in the figure above. We can see that by tuning the weights \\(w_{1}\\), \\(w_{2}\\), we can adjust the output of the neuron.
+In most applications, a node will then take a linear combination of inputs \(z = x_{1}w_{1}+x_{2}w_{2}+b\), including a bias term \(b\), and apply a nonlinear activation function on the linear combination to produce an output as shown in the figure above. We can see that by tuning the weights \(w_{1}\), \(w_{2}\), we can adjust the output of the neuron.
 
 There are many possible activation functions that are often used during implementation. The most common are:
 
-* Sigmoid: \\(\sigma(z) = 1/(1+\mathrm{exp}(z))\\) <br><br>
-* tanh: \\(tanh(z) = 2\sigma(2z) -1\\) <br><br>
-* ReLU: \\(f(z) = \mathrm{max}(0,z)\\) <br><br>
+* Sigmoid: \(\sigma(z) = 1/(1+\mathrm{exp}(z))\) <br><br>
+* tanh: \(tanh(z) = 2\sigma(2z) -1\) <br><br>
+* ReLU: \(f(z) = \mathrm{max}(0,z)\) <br><br>
 
 We do not go through the pros and cons of these activation functions here but will instead stick to the ReLU activation function, which stands for *Rectified Linear Unit*.
 
@@ -91,7 +91,7 @@ Now we would like to implement a method for data to be fed through the network t
 
 ![wmatmult.png](assets/wmatmult.png "Weight-Input Matrix Multiplication")
 
-The diagram above shows explicitly the process of feeding an input with three features into a hidden layer with three nodes, fully connected with the input nodes. The inputs are multiplied by their corresponding weights connecting them to a node in the hidden layer, and then summed up including a bias term ($w^{(0)}_{10}$ etc.), resulting in the linear combinations \\(z^{(0)}_{11}\\) etc. The ReLU activation function is then applied on them to produce the ouputs of the first hidden layer. Notice that by adding a row of 1s in the input matrix we can formulate the action of the weights on the inputs as matrix multiplication between the matrix of weights and matrix of inputs.
+The diagram above shows explicitly the process of feeding an input with three features into a hidden layer with three nodes, fully connected with the input nodes. The inputs are multiplied by their corresponding weights connecting them to a node in the hidden layer, and then summed up including a bias term ($w^{(0)}_{10}$ etc.), resulting in the linear combinations \(z^{(0)}_{11}\) etc. The ReLU activation function is then applied on them to produce the ouputs of the first hidden layer. Notice that by adding a row of 1s in the input matrix we can formulate the action of the weights on the inputs as matrix multiplication between the matrix of weights and matrix of inputs.
 
 ![zmatmult.png](assets/zmatmult.png "Weight-Input Matrix Multiplication")
 
@@ -101,7 +101,7 @@ Finally, for the output of the neural network we utilise the softmax function, a
 
 ![softmax.png](assets/softmax.png "Weight-Input Matrix Multiplication")
 
-Here, the summation in the denominator is over the \\(K\\) number of categories that the output can possibly belong to. Essentially, the softmax function takes a vector-valued input, exponentiates each component of the vector, then normalises it to produce a a vector-valued output of the same number of components or dimension. The output can then be interpreted as a categorical probability distribution of \\(K\\) different outcomes.
+Here, the summation in the denominator is over the \(K\) number of categories that the output can possibly belong to. Essentially, the softmax function takes a vector-valued input, exponentiates each component of the vector, then normalises it to produce a a vector-valued output of the same number of components or dimension. The output can then be interpreted as a categorical probability distribution of \(K\) different outcomes.
 
 We now have all the ingredients to implement the forward propagation algorithm:
 
@@ -136,19 +136,19 @@ def fprop(self, x):
 
 ## Cost Functions and Gradient Descent
 
-Now we recall the aim of having utilising an ANN. We want to train an ANN with the appropriate weights so that it can approximate a function which classifies accurately data that we are interested in. In order to measure how far "off" the function \\(\hat{f}\\) represented by the neural network is compared to the function \\(f\\), we will introduce the cost function. The cost function is a measure of how wrong the model is in terms of approximating the actual relationship \\(f\\) between \\(X\\) and \\(Y\\). 
+Now we recall the aim of having utilising an ANN. We want to train an ANN with the appropriate weights so that it can approximate a function which classifies accurately data that we are interested in. In order to measure how far "off" the function \(\hat{f}\) represented by the neural network is compared to the function \(f\), we will introduce the cost function. The cost function is a measure of how wrong the model is in terms of approximating the actual relationship \(f\) between \(X\) and \(Y\). 
 
 There are two commonly used cost functions. Firstly, the sum of squares error (SSE):
 
 $$SSE = \sum^{N}_{n} (\hat{y}_{n} - y_{n})^{2} = (\hat{Y} - Y)^{T}(\hat{Y} - Y)$$
 
-up to an irrelevant multiplicative constant. Here the sum is over every \\(n\\) observations (of a total of \\(N\\) observations) in the training dataset, and both \\(\hat{Y}\\) and \\(Y\\) are vectors of the form \\(Y = (y_{1}, y_{2}, \dots, y_{N})^{T}\\) where each \\(y_{n}\\) is an integer representing a category. This cost function has a straightforward interpretation of measuring the difference between \\(\hat{Y}\\) and \\(Y\\) directly.
+up to an irrelevant multiplicative constant. Here the sum is over every \(n\) observations (of a total of \(N\) observations) in the training dataset, and both \(\hat{Y}\) and \(Y\) are vectors of the form \(Y = (y_{1}, y_{2}, \dots, y_{N})^{T}\) where each \(y_{n}\) is an integer representing a category. This cost function has a straightforward interpretation of measuring the difference between \(\hat{Y}\) and \(Y\) directly.
 
 Secondly, the cross entropy:
 
 $$S = - \sum_{n,\alpha} y_{n,\alpha} \log \hat{y}_{n,\alpha}$$
 
-again up to an irrelevant multiplicative constant. Here the sum is over each \\(n\\) observations and \\(\alpha\\) categories. The \\(y\\) and \\(\hat{y}\\) are one hot encoded matrices, such that for a dataset with three categories, a particular observation will have \\(y\\) take on the value of either \\((1,0,0)^{T}\), \((0,1,0)^{T}\\) or \((0,0,1)^{T}\). The interpretation of this cost function is not as straightforward and would require a primer on information theory. Suffice to say that the cross entropy is just another way of measuring how far off the model is in predicting the target labels of the training set. For the rest of this article, we will select the cross entropy \\(S\\) to be our cost function.
+again up to an irrelevant multiplicative constant. Here the sum is over each \(n\) observations and \(\alpha\) categories. The \(y\) and \(\hat{y}\) are one hot encoded matrices, such that for a dataset with three categories, a particular observation will have \(y\) take on the value of either \((1,0,0)^{T}\), \((0,1,0)^{T}\) or \((0,0,1)^{T}\). The interpretation of this cost function is not as straightforward and would require a primer on information theory. Suffice to say that the cross entropy is just another way of measuring how far off the model is in predicting the target labels of the training set. For the rest of this article, we will select the cross entropy \(S\) to be our cost function.
 
 In order to improve our model from one that is initialised with random weights, we would like the minimise the cost function with respect to the weights. One common method of achieving is this is through the process of Gradient Descent. 
 
@@ -162,7 +162,7 @@ Mathematically, taking a small step in this direction is done by the following:
 
 $$w^{n+1}_{ij} = w^{n}_{ij} - \alpha (\nabla S)_{ij}$$
 
-where the \\(n\\) represents the current iteration number. The current set of weights are therefore adjusted in the opposite direction of the gradient, and the parameter \\(\alpha\\), otherwise known as the step size, controls the size of this direction. Having an \\(\alpha\\) that is too small will typically result in slow convergence while having an \\(\alpha\\) that is too large can result in a failure to converge as the algorithm oscillates among points surrounding the minima of the cost function.
+where the \(n\) represents the current iteration number. The current set of weights are therefore adjusted in the opposite direction of the gradient, and the parameter \(\alpha\), otherwise known as the step size, controls the size of this direction. Having an \(\alpha\) that is too small will typically result in slow convergence while having an \(\alpha\) that is too large can result in a failure to converge as the algorithm oscillates among points surrounding the minima of the cost function.
 
 In pseudocode, the gradient descent algorithm is as follows:
 
@@ -176,7 +176,7 @@ WHILE abs(S_current - S_previous) > threshold
     SET S_current as current calculated cost
 ```
 
-In order to proceed with the implementation of gradient descent, we thus require the calculation of \\(\nabla S\\), the gradient vector of the cost function. Now there is a naive way to calculate this gradient. Often for functions with few variables, one proceeds to estimate the gradient via the finite difference method (there are many variations of these):
+In order to proceed with the implementation of gradient descent, we thus require the calculation of \(\nabla S\), the gradient vector of the cost function. Now there is a naive way to calculate this gradient. Often for functions with few variables, one proceeds to estimate the gradient via the finite difference method (there are many variations of these):
 
 $$\frac{\partial S}{\partial w_{ij}} = \frac{S(\dots,w_{ij}+\epsilon,\dots) - S(\dots,w_{ij}-\epsilon,\dots)}{2\epsilon}$$
 
@@ -202,24 +202,24 @@ We've seen earlier that in order to train a neural network on a given dataset th
 
 $$ \frac{\partial S}{\partial w_{ij}} = \, ? $$ 
 
-where \\(S\\) is the cross-entropy cost function and \\(w_{ij}\\) is the weight that connects the j-th node to the i-th node.
+where \(S\) is the cross-entropy cost function and \(w_{ij}\) is the weight that connects the j-th node to the i-th node.
 
-To begin with, let us recall the chain rule of calculus. Given a function \\(f(x) = f(g(x))\), the derivative of \(f(x)\\) w.r.t. \\(x\\) is then given by:
+To begin with, let us recall the chain rule of calculus. Given a function \(f(x) = f(g(x))\), the derivative of \(f(x)\) w.r.t. \(x\) is then given by:
 
 $$ \frac{df}{dx} = \frac{df}{dg}\frac{dg}{dx}. $$
 
-This is the simplest form of the chain rule, for functions with only a single variable. For functions with two variables, for example \\(f(x,y) = f(g(x,y), h(x,y))\), we can generalise the above equation as follows:
+This is the simplest form of the chain rule, for functions with only a single variable. For functions with two variables, for example \(f(x,y) = f(g(x,y), h(x,y))\), we can generalise the above equation as follows:
 
 $$ \frac{\partial f}{\partial x} = \frac{\partial f}{\partial g}\frac{\partial g}{\partial x} + \frac{\partial f}{\partial h}\frac{\partial h}{\partial x} \\
 \frac{\partial f}{\partial y} = \frac{\partial f}{\partial g}\frac{\partial g}{\partial y} + \frac{\partial f}{\partial h}\frac{\partial h}{\partial y}$$
 
 with the partial derivatives replacing the total derivatives for multivariate functions. 
 
-The above examples show the chain rule for calculating the derivatives of functions that are composed of out a single layer of functions, for example \\(f(x) = f(g(x))\). By recursion we can generalise this rule to functions that are composed out of multiple layers of functions, say \(f(x) = f(g(h(i(j(x)))))\\) and so on. Therefore in general, we have
+The above examples show the chain rule for calculating the derivatives of functions that are composed of out a single layer of functions, for example \(f(x) = f(g(x))\). By recursion we can generalise this rule to functions that are composed out of multiple layers of functions, say \(f(x) = f(g(h(i(j(x)))))\) and so on. Therefore in general, we have
 
 $$ \frac{\partial f}{\partial x_i} = \sum_{i_1,...,i_n} \frac{\partial f}{\partial y_{i_1}} ... \frac{\partial y_{i_{n-1}}}{\partial y_{i_n}} \frac{\partial y_n}{\partial x_i}. $$
 
-But what does all these mean and how does it relate to neural networks? To make the link clearer, we will revisit the function \\(f(x,y) = f(g(x,y), h(x,y))\). We can actually represent what this function does in a graphical manner:
+But what does all these mean and how does it relate to neural networks? To make the link clearer, we will revisit the function \(f(x,y) = f(g(x,y), h(x,y))\). We can actually represent what this function does in a graphical manner:
 
 ![graphf.png](assets/graphf.png "Graphical representation of composed function")
 
@@ -233,13 +233,13 @@ Now we see in comparison that an ANN is simply a function made of many composed 
 
 ![vecgraph.png](assets/vecgraph.png "Simplified graphical representation of Neural Network")
 
-In this discussion we will neglect the biases for simplicity, as the core of the idea is unchanged. Compared to the earlier graphs involving the functions \\(f\\), \\(g\\) and \\(h\\), this graph representing the ANN has matrix valued functions. However we can apply the same principle in order to find the derivatives of the cross entropy with respect to the weights \\(W^{(i)}\). 
+In this discussion we will neglect the biases for simplicity, as the core of the idea is unchanged. Compared to the earlier graphs involving the functions \(f\), \(g\) and \(h\), this graph representing the ANN has matrix valued functions. However we can apply the same principle in order to find the derivatives of the cross entropy with respect to the weights \(W^{(i)}\). 
 
 Once again, we start from the output of the function and then work our way backwards along the graph to the inputs. For the weights closest to the output:
 
 ![dw1.png](assets/dw1.png)
 
-We want to calculate the quantity \\(\frac{dS}{dW^{(1)}}\), which is a matrix-valued quantity (or vector-valued, since you can use a single index rather than two indices to list all the weights). Working backwards using the chain rule we have in matrix notation:
+We want to calculate the quantity \(\frac{dS}{dW^{(1)}}\), which is a matrix-valued quantity (or vector-valued, since you can use a single index rather than two indices to list all the weights). Working backwards using the chain rule we have in matrix notation:
 
 $$ \frac{dS}{dW^{(1)}} = \frac{dS}{d\hat{Y}} \frac{d\hat{Y}}{d Z^{(1)}} \frac{d Z^{(1)}}{d W^{(1)}}$$
 
@@ -247,7 +247,7 @@ or more explicitly in terms of individual components:
 
 $$ \frac{dS}{dw^{(1)}_{mn}} = \sum_{i} \sum_{jk} \sum_{mn} \frac{dS}{d\hat{y}_{i}} \frac{d\hat{y}_{i}}{d z^{(1)}_{jk}} \frac{d z^{(1)}_{jk}}{d w^{(1)}_{mn}}$$
 
-It turns out to be more convenient to directly calculate \\(\frac{dS}{d Z^{(1)}} = \frac{dS}{d\hat{Y}} \frac{d\hat{Y}}{d Z^{(1)}}\\) instead. These expressions can be evaluated analytically and we can obtain the following expressions in matrix notation:
+It turns out to be more convenient to directly calculate \(\frac{dS}{d Z^{(1)}} = \frac{dS}{d\hat{Y}} \frac{d\hat{Y}}{d Z^{(1)}}\) instead. These expressions can be evaluated analytically and we can obtain the following expressions in matrix notation:
 
 $$ \frac{dS}{d Z^{(1)}} = \Delta^{(1)} = \hat{Y} - Y \\
 \frac{dS}{dW^{(1)}} = \Delta^{(1)} X^{(1)T} $$
@@ -256,14 +256,14 @@ Now we move on to the next layer:
 
 ![dw2.png](assets/dw2.png)
 
-We notice that this path overlaps with the previous path used to calculate \\(\frac{dS}{dW^{(1)}}\), so we can reuse results from the previous discussion in the calculation of \(\frac{dS}{dW^{(1)}}\), for the calculation of \(\frac{dS}{dW^{(0)}}\). We have then in matrix notation:
+We notice that this path overlaps with the previous path used to calculate \(\frac{dS}{dW^{(1)}}\), so we can reuse results from the previous discussion in the calculation of \(\frac{dS}{dW^{(1)}}\), for the calculation of \(\frac{dS}{dW^{(0)}}\). We have then in matrix notation:
 
 $$\begin{aligned} 
 \frac{dS}{dW^{(0)}} &= \frac{dS}{d Z^{(1)}} \frac{d Z^{(1)}}{d X^{(1)}} \frac{d X^{(1)}}{d Z^{(0)}} \frac{d Z^{(0)}}{d W^{(0)}}  \\
 &= \Delta^{(1)} \frac{d Z^{(1)}}{d X^{(1)}} \frac{d X^{(1)}}{d Z^{(0)}} \frac{d Z^{(0)}}{d W^{(0)}} 
 \end{aligned}$$
 
-From here we can proceed to obtain expressions for each derivative. On point to note is the derivative of the ReLU function. Technically speaking, the ReLU function is not a continuous function - for ReLU$(x)$ its derivative is undefined at \\(x=0\\). We will adopt the following convention for the derivative of the ReLU function:
+From here we can proceed to obtain expressions for each derivative. On point to note is the derivative of the ReLU function. Technically speaking, the ReLU function is not a continuous function - for ReLU$(x)$ its derivative is undefined at \(x=0\). We will adopt the following convention for the derivative of the ReLU function:
 
 $$ \frac{d ReLU(x)}{d x} =
 \begin{cases} &1  &x > 0\\
@@ -281,7 +281,7 @@ $$\begin{aligned}
 \end{aligned}
 $$
 
-With these we have the expressions required to calculate the gradient for gradient descent, for an ANN with a single hidden layer. It is easy enough to generalise this for ANNs with an abitrary \\(L\\) number of hidden layers:
+With these we have the expressions required to calculate the gradient for gradient descent, for an ANN with a single hidden layer. It is easy enough to generalise this for ANNs with an abitrary \(L\) number of hidden layers:
 
 $$\begin{aligned}
 \Delta^{(L)} &= \hat{Y} - Y \\
@@ -306,11 +306,11 @@ $$
 
 We see that working from the output layer backwards, we can use the derivatives calculated from one layer to calculate the derivatives of the weights connecting the next inner layer. The theory behind backpropagation may seem rather convoluted compared to the naive calculation of the gradient as discussed earlier. However, the computational complexity is in fact much lower in comparison for backpropagation. This is because only one backward pass through the network is required in backpropagation, compared to the large number of forward passes (on the order of the total number of weights) required for the naive method.
 
-One final point to note is that in the previous discussion, we have neglected to discuss the treatment of the derivative of the cost function with respect to the biases. In order to account for the bias weights in the network, we have to make a change to the expression for \\(\frac{d Z^{(l+1)}}{d X^{(l+1)}}\), when calculating the derivative of the cost function with respect to the weights \(W^{(l)}\), ie \(\frac{d S}{d W^{(l)}}\). We can proceed by making the observation that the bias nodes (which always have an activation value of one) have no parent node and are always do not have a connection to the previous layer of nodes. In other words, the backpropagation does not 'propagate' the bias weight gradients to the previous layers. More explicitly, the term \(\frac{d Z^{(l+1)}}{d X^{(l+1)}}\\) has to be restricted to all elements other than bias nodes:
+One final point to note is that in the previous discussion, we have neglected to discuss the treatment of the derivative of the cost function with respect to the biases. In order to account for the bias weights in the network, we have to make a change to the expression for \(\frac{d Z^{(l+1)}}{d X^{(l+1)}}\), when calculating the derivative of the cost function with respect to the weights \(W^{(l)}\), ie \(\frac{d S}{d W^{(l)}}\). We can proceed by making the observation that the bias nodes (which always have an activation value of one) have no parent node and are always do not have a connection to the previous layer of nodes. In other words, the backpropagation does not 'propagate' the bias weight gradients to the previous layers. More explicitly, the term \(\frac{d Z^{(l+1)}}{d X^{(l+1)}}\) has to be restricted to all elements other than bias nodes:
 
 ![xrestrict.png](assets/xrestrict.png)
 
-T Here, \\(d_{l+1}\\) is the number of nodes excluding the bias node in the l-th hidden layer. Instead of taking the derivative with respect to \\(X^{(l+1)}\), we take the derivative \(\frac{d Z^{(l+1)}}{d X'^{(l+1)}}\):
+T Here, \(d_{l+1}\) is the number of nodes excluding the bias node in the l-th hidden layer. Instead of taking the derivative with respect to \(X^{(l+1)}\), we take the derivative \(\frac{d Z^{(l+1)}}{d X'^{(l+1)}}\):
 
 $$\begin{aligned}
 \Delta^{(l)} &= \frac{d S}{d Z^{(l)}} = \Delta^{(l+1)} \frac{d Z^{(l+1)}}{d X'^{(l+1)}} \frac{d X'^{(l+1)}}{d Z^{(l)}}\\
@@ -321,7 +321,7 @@ $$\begin{aligned}
 \end{aligned}
 $$
 
-neglecting the zeroth row in \\(X^{(l+1)}\\) that contains the bias node activations.
+neglecting the zeroth row in \(X^{(l+1)}\) that contains the bias node activations.
 
 We can now use these expressions in order to implement a backpropagation algorithm:
 
@@ -368,17 +368,17 @@ One method to attempt to overcome some of the issues that batch gradient descent
 
 $$w^{n+1}_{ij} = w^{n}_{ij} - \alpha (\nabla S^{(n)})_{ij}$$
 
-where \\(S^{(n)}\\) is the cost function calculated over a single observation. For the cross entropy cost function, this would be given explicitly by:
+where \(S^{(n)}\) is the cost function calculated over a single observation. For the cross entropy cost function, this would be given explicitly by:
 
 $$S^{(n)} = - \sum_{\alpha} y_{n,\alpha} \log \hat{y}_{n,\alpha}$$
 
-Once the algorithm iterates over every observation in the training set, the observations are reshuffled and the algorithm repeated. Each cycle of iterations over the training set is known as an *epoch*. In effect, observations are selected randomly and this stochasticity that gives the algorithm its name. It also allows the optimization process to avoid local minima due to the fluctuations induced; the parameters do not necessarily update towards the direction of steepest descent. Of course the fluctuations also cause convergence problems if they are too large; the practical solution is usually to gradually descrease the step size \\(\alpha\\) of each iteration.
+Once the algorithm iterates over every observation in the training set, the observations are reshuffled and the algorithm repeated. Each cycle of iterations over the training set is known as an *epoch*. In effect, observations are selected randomly and this stochasticity that gives the algorithm its name. It also allows the optimization process to avoid local minima due to the fluctuations induced; the parameters do not necessarily update towards the direction of steepest descent. Of course the fluctuations also cause convergence problems if they are too large; the practical solution is usually to gradually descrease the step size \(\alpha\) of each iteration.
 
-The next method, mini-batch gradient descent, is a middle ground between the two extreme examples of batch gradient descent, where the entire training set is used for each update, and stochastic gradient descent, where only a single observation is used for each update. For mini-batch gradient descent, the training set is divided into \\(m\\) number of mini-batches. Each weight update is performed by using the cost function calculated over a mini-batch. So equation used to update the weights is:
+The next method, mini-batch gradient descent, is a middle ground between the two extreme examples of batch gradient descent, where the entire training set is used for each update, and stochastic gradient descent, where only a single observation is used for each update. For mini-batch gradient descent, the training set is divided into \(m\) number of mini-batches. Each weight update is performed by using the cost function calculated over a mini-batch. So equation used to update the weights is:
 
 $$S^{(i)} = - \sum^{N/m}_{n_{i}} \sum_{\alpha} y_{n_{i},\alpha} \log \hat{y}_{n_{i},\alpha}$$
 
-where \\(i\\) is the mini-batch number, \\(N\\) is the total number of observations, \\(m\\) is the total number of mini-batches and \\(N/m\\) is the number of observations in each mini-batch assuming each mini-batch has the same number of observations. \\(n_{i}\\) labels the observations within the $i$-th mini-batch. In this manner, mini-batch gradient descent tries to take the best of both worlds by:
+where \(i\) is the mini-batch number, \(N\) is the total number of observations, \(m\) is the total number of mini-batches and \(N/m\) is the number of observations in each mini-batch assuming each mini-batch has the same number of observations. \(n_{i}\) labels the observations within the $i$-th mini-batch. In this manner, mini-batch gradient descent tries to take the best of both worlds by:
 
 * Enabling the algorithm to jump out of local minima by sampling randomly arranged data one mini-batch at a time
 * Enabling the algorithm to make use of vectorization libraries for better efficiency
