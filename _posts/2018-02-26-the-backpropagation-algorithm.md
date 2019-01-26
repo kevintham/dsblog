@@ -91,7 +91,7 @@ Now we would like to implement a method for data to be fed through the network t
 
 {% include image.html name="wmatmult.png" %}
 
-The diagram above shows explicitly the process of feeding an input with three features into a hidden layer with three nodes, fully connected with the input nodes. The inputs are multiplied by their corresponding weights connecting them to a node in the hidden layer, and then summed up including a bias term ($w^{(0)}_{10}$ etc.), resulting in the linear combinations \\(z^{(0)}_{11}\\) etc. The ReLU activation function is then applied on them to produce the ouputs of the first hidden layer. Notice that by adding a row of 1s in the input matrix we can formulate the action of the weights on the inputs as matrix multiplication between the matrix of weights and matrix of inputs.
+The diagram above shows explicitly the process of feeding an input with three features into a hidden layer with three nodes, fully connected with the input nodes. The inputs are multiplied by their corresponding weights connecting them to a node in the hidden layer, and then summed up including a bias term (\\(w_{10}^{(0)}\\) etc.), resulting in the linear combinations \\(z^{(0)}_{11}\\) etc. The ReLU activation function is then applied on them to produce the ouputs of the first hidden layer. Notice that by adding a row of 1s in the input matrix we can formulate the action of the weights on the inputs as matrix multiplication between the matrix of weights and matrix of inputs.
 
 {% include image.html name="zmatmult.png" %}
 ![zmatmult.png](assets/zmatmult.png "Weight-Input Matrix Multiplication")
@@ -150,7 +150,7 @@ Secondly, the cross entropy:
 
 $$S = - \sum_{n,\alpha} y_{n,\alpha} \log \hat{y}_{n,\alpha}$$
 
-again up to an irrelevant multiplicative constant. Here the sum is over each \\(n\\) observations and \\(\alpha\\) categories. The \\(y\\) and \\(\hat{y}\\) are one hot encoded matrices, such that for a dataset with three categories, a particular observation will have \\(y\\) take on the value of either \\((1,0,0)^{T}\), \((0,1,0)^{T}\\) or \((0,0,1)^{T}\). The interpretation of this cost function is not as straightforward and would require a primer on information theory. Suffice to say that the cross entropy is just another way of measuring how far off the model is in predicting the target labels of the training set. For the rest of this article, we will select the cross entropy \\(S\\) to be our cost function.
+again up to an irrelevant multiplicative constant. Here the sum is over each \\(n\\) observations and \\(\alpha\\) categories. The \\(y\\) and \\(\hat{y}\\) are one hot encoded matrices, such that for a dataset with three categories, a particular observation will have \\(y\\) take on the value of either \\((1,0,0)^{T}\\), \\((0,1,0)^{T}\\) or \\((0,0,1)^{T}\\). The interpretation of this cost function is not as straightforward and would require a primer on information theory. Suffice to say that the cross entropy is just another way of measuring how far off the model is in predicting the target labels of the training set. For the rest of this article, we will select the cross entropy \\(S\\) to be our cost function.
 
 In order to improve our model from one that is initialised with random weights, we would like the minimise the cost function with respect to the weights. One common method of achieving is this is through the process of Gradient Descent. 
 
@@ -192,10 +192,10 @@ We will include the code for the cost function here:
 ```python
 %%add_to Network
 def cost(self, y):
-        """Calculates cross-entropy cost. y here is a one-hot encoded matrix
-        with columns denoting samples and rows representing class"""
-        S = - np.sum(y*np.log(self.a[-1]))
-        return S 
+    """Calculates cross-entropy cost. y here is a one-hot encoded matrix
+    with columns denoting samples and rows representing class"""
+    S = - np.sum(y*np.log(self.a[-1]))
+    return S 
 ```
 
 ## The Backpropagation Algorithm
@@ -206,22 +206,22 @@ $$ \frac{\partial S}{\partial w_{ij}} = \, ? $$
 
 where \\(S\\) is the cross-entropy cost function and \\(w_{ij}\\) is the weight that connects the j-th node to the i-th node.
 
-To begin with, let us recall the chain rule of calculus. Given a function \\(f(x) = f(g(x))\), the derivative of \(f(x)\\) w.r.t. \\(x\\) is then given by:
+To begin with, let us recall the chain rule of calculus. Given a function \\(f(x) = f(g(x))\\), the derivative of \\(f(x)\\) w.r.t. \\(x\\) is then given by:
 
 $$ \frac{df}{dx} = \frac{df}{dg}\frac{dg}{dx}. $$
 
-This is the simplest form of the chain rule, for functions with only a single variable. For functions with two variables, for example \\(f(x,y) = f(g(x,y), h(x,y))\), we can generalise the above equation as follows:
+This is the simplest form of the chain rule, for functions with only a single variable. For functions with two variables, for example \\(f(x,y) = f(g(x,y), h(x,y))\\), we can generalise the above equation as follows:
 
 $$ \frac{\partial f}{\partial x} = \frac{\partial f}{\partial g}\frac{\partial g}{\partial x} + \frac{\partial f}{\partial h}\frac{\partial h}{\partial x} \\
 \frac{\partial f}{\partial y} = \frac{\partial f}{\partial g}\frac{\partial g}{\partial y} + \frac{\partial f}{\partial h}\frac{\partial h}{\partial y}$$
 
 with the partial derivatives replacing the total derivatives for multivariate functions. 
 
-The above examples show the chain rule for calculating the derivatives of functions that are composed of out a single layer of functions, for example \\(f(x) = f(g(x))\). By recursion we can generalise this rule to functions that are composed out of multiple layers of functions, say \(f(x) = f(g(h(i(j(x)))))\\) and so on. Therefore in general, we have
+The above examples show the chain rule for calculating the derivatives of functions that are composed of out a single layer of functions, for example \\(f(x) = f(g(x))\\). By recursion we can generalise this rule to functions that are composed out of multiple layers of functions, say \\(f(x) = f(g(h(i(j(x)))))\\) and so on. Therefore in general, we have
 
 $$ \frac{\partial f}{\partial x_i} = \sum_{i_1,...,i_n} \frac{\partial f}{\partial y_{i_1}} ... \frac{\partial y_{i_{n-1}}}{\partial y_{i_n}} \frac{\partial y_n}{\partial x_i}. $$
 
-But what does all these mean and how does it relate to neural networks? To make the link clearer, we will revisit the function \\(f(x,y) = f(g(x,y), h(x,y))\). We can actually represent what this function does in a graphical manner:
+But what does all these mean and how does it relate to neural networks? To make the link clearer, we will revisit the function \\(f(x,y) = f(g(x,y), h(x,y))\\). We can actually represent what this function does in a graphical manner:
 
 {% include image.html name="graphf.png" %}
 ![graphf.png](assets/graphf.png "Graphical representation of composed function")
@@ -238,14 +238,14 @@ Now we see in comparison that an ANN is simply a function made of many composed 
 ![vecgraph.png](assets/vecgraph.png "Simplified graphical representation of Neural Network")
 {% include image.html name="vecgraph.png" %}
 
-In this discussion we will neglect the biases for simplicity, as the core of the idea is unchanged. Compared to the earlier graphs involving the functions \\(f\\), \\(g\\) and \\(h\\), this graph representing the ANN has matrix valued functions. However we can apply the same principle in order to find the derivatives of the cross entropy with respect to the weights \\(W^{(i)}\). 
+In this discussion we will neglect the biases for simplicity, as the core of the idea is unchanged. Compared to the earlier graphs involving the functions \\(f\\), \\(g\\) and \\(h\\), this graph representing the ANN has matrix valued functions. However we can apply the same principle in order to find the derivatives of the cross entropy with respect to the weights \\(W^{(i)}\\). 
 
 Once again, we start from the output of the function and then work our way backwards along the graph to the inputs. For the weights closest to the output:
 
 {% include image.html name="dw1.png" %}
 ![dw1.png](assets/dw1.png)
 
-We want to calculate the quantity \\(\frac{dS}{dW^{(1)}}\), which is a matrix-valued quantity (or vector-valued, since you can use a single index rather than two indices to list all the weights). Working backwards using the chain rule we have in matrix notation:
+We want to calculate the quantity \\(\frac{dS}{dW^{(1)}}\\), which is a matrix-valued quantity (or vector-valued, since you can use a single index rather than two indices to list all the weights). Working backwards using the chain rule we have in matrix notation:
 
 $$ \frac{dS}{dW^{(1)}} = \frac{dS}{d\hat{Y}} \frac{d\hat{Y}}{d Z^{(1)}} \frac{d Z^{(1)}}{d W^{(1)}}$$
 
@@ -263,7 +263,7 @@ Now we move on to the next layer:
 ![dw2.png](assets/dw2.png)
 {%include image.html name="dw2.png" %}
 
-We notice that this path overlaps with the previous path used to calculate \\(\frac{dS}{dW^{(1)}}\), so we can reuse results from the previous discussion in the calculation of \(\frac{dS}{dW^{(1)}}\), for the calculation of \(\frac{dS}{dW^{(0)}}\). We have then in matrix notation:
+We notice that this path overlaps with the previous path used to calculate \\(\frac{dS}{dW^{(1)}}\\), so we can reuse results from the previous discussion in the calculation of \\(\frac{dS}{dW^{(1)}}\\), for the calculation of \\(\frac{dS}{dW^{(0)}}\\). We have then in matrix notation:
 
 $$\begin{aligned} 
 \frac{dS}{dW^{(0)}} &= \frac{dS}{d Z^{(1)}} \frac{d Z^{(1)}}{d X^{(1)}} \frac{d X^{(1)}}{d Z^{(0)}} \frac{d Z^{(0)}}{d W^{(0)}}  \\
@@ -313,12 +313,12 @@ $$
 
 We see that working from the output layer backwards, we can use the derivatives calculated from one layer to calculate the derivatives of the weights connecting the next inner layer. The theory behind backpropagation may seem rather convoluted compared to the naive calculation of the gradient as discussed earlier. However, the computational complexity is in fact much lower in comparison for backpropagation. This is because only one backward pass through the network is required in backpropagation, compared to the large number of forward passes (on the order of the total number of weights) required for the naive method.
 
-One final point to note is that in the previous discussion, we have neglected to discuss the treatment of the derivative of the cost function with respect to the biases. In order to account for the bias weights in the network, we have to make a change to the expression for \\(\frac{d Z^{(l+1)}}{d X^{(l+1)}}\), when calculating the derivative of the cost function with respect to the weights \(W^{(l)}\), ie \(\frac{d S}{d W^{(l)}}\). We can proceed by making the observation that the bias nodes (which always have an activation value of one) have no parent node and are always do not have a connection to the previous layer of nodes. In other words, the backpropagation does not 'propagate' the bias weight gradients to the previous layers. More explicitly, the term \(\frac{d Z^{(l+1)}}{d X^{(l+1)}}\\) has to be restricted to all elements other than bias nodes:
+One final point to note is that in the previous discussion, we have neglected to discuss the treatment of the derivative of the cost function with respect to the biases. In order to account for the bias weights in the network, we have to make a change to the expression for \\(\frac{d Z^{(l+1)}}{d X^{(l+1)}}\\), when calculating the derivative of the cost function with respect to the weights \\(W^{(l)}\\), ie \\(\frac{d S}{d W^{(l)}}\\). We can proceed by making the observation that the bias nodes (which always have an activation value of one) have no parent node and are always do not have a connection to the previous layer of nodes. In other words, the backpropagation does not 'propagate' the bias weight gradients to the previous layers. More explicitly, the term \\(\frac{d Z^{(l+1)}}{d X^{(l+1)}}\\) has to be restricted to all elements other than bias nodes:
 
 {% include image.html name="xrestrict.png" %}
 ![xrestrict.png](assets/xrestrict.png)
 
-T Here, \\(d_{l+1}\\) is the number of nodes excluding the bias node in the l-th hidden layer. Instead of taking the derivative with respect to \\(X^{(l+1)}\), we take the derivative \(\frac{d Z^{(l+1)}}{d X'^{(l+1)}}\):
+Here, \\(d_{l+1}\\) is the number of nodes excluding the bias node in the l-th hidden layer. Instead of taking the derivative with respect to \\(X^{(l+1)}\\), we take the derivative \\(\frac{d Z^{(l+1)}}{d X'^{(l+1)}}\\):
 
 $$\begin{aligned}
 \Delta^{(l)} &= \frac{d S}{d Z^{(l)}} = \Delta^{(l+1)} \frac{d Z^{(l+1)}}{d X'^{(l+1)}} \frac{d X'^{(l+1)}}{d Z^{(l)}}\\
