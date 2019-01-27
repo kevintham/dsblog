@@ -94,14 +94,12 @@ Now we would like to implement a method for data to be fed through the network t
 The diagram above shows explicitly the process of feeding an input with three features into a hidden layer with three nodes, fully connected with the input nodes. The inputs are multiplied by their corresponding weights connecting them to a node in the hidden layer, and then summed up including a bias term (\\(w_{10}^{(0)}\\) etc.), resulting in the linear combinations \\(z^{(0)}_{11}\\) etc. The ReLU activation function is then applied on them to produce the ouputs of the first hidden layer. Notice that by adding a row of 1s in the input matrix we can formulate the action of the weights on the inputs as matrix multiplication between the matrix of weights and matrix of inputs.
 
 {% include image.html name="zmatmult.png" %}
-![zmatmult.png](assets/zmatmult.png "Weight-Input Matrix Multiplication")
 
 Now that we have described the procedure for calculating the output of a hidden layer connected to the inputs, we can generalise this to an arbitrary number of hidden layers connected to the input layer, by simply repeating the procedure for the number of hidden layers present in the chosen architecture.
 
 Finally, for the output of the neural network we utilise the softmax function, as described below. 
 
 {% include image.html name="softmax.png" %}
-![softmax.png](assets/softmax.png "Weight-Input Matrix Multiplication")
 
 Here, the summation in the denominator is over the \\(K\\) number of categories that the output can possibly belong to. Essentially, the softmax function takes a vector-valued input, exponentiates each component of the vector, then normalises it to produce a a vector-valued output of the same number of components or dimension. The output can then be interpreted as a categorical probability distribution of \\(K\\) different outcomes.
 
@@ -224,18 +222,15 @@ $$ \frac{\partial f}{\partial x_i} = \sum_{i_1,...,i_n} \frac{\partial f}{\parti
 But what does all these mean and how does it relate to neural networks? To make the link clearer, we will revisit the function \\(f(x,y) = f(g(x,y), h(x,y))\\). We can actually represent what this function does in a graphical manner:
 
 {% include image.html name="graphf.png" %}
-![graphf.png](assets/graphf.png "Graphical representation of composed function")
 
 We can also form a graph for calculating the derivatives of this function:
 
 {% include image.html name="dfbprop.png" %}
-![dfbprop.png](assets/dfbprop.png "Graphical representation of derivatives of composed function")
 
 From the above figure, we can see that in order to calculate the derivatives of a composed function, we can first represent the connections between nodes as the derivative of the child node with respect to the parent node. Then, beginning from the node on the right, travel backwards towards the input while multiplying the derivatives on every connection together. The derivative is then obtained by summing up all the accumulated derivatives along every path that leads from output to the input (or whichever variable you are interested in finding the derivative of). This gives a simple rule for calculating derivatives of composed functions.
 
 Now we see in comparison that an ANN is simply a function made of many composed functions. We can also apply a similar principle in order to calculate the derivatives of the cost function with respect to the weights. In order to do this we will represent the ANN with a simpler graph (without loss of generality showing an ANN with only one hidden layer):
 
-![vecgraph.png](assets/vecgraph.png "Simplified graphical representation of Neural Network")
 {% include image.html name="vecgraph.png" %}
 
 In this discussion we will neglect the biases for simplicity, as the core of the idea is unchanged. Compared to the earlier graphs involving the functions \\(f\\), \\(g\\) and \\(h\\), this graph representing the ANN has matrix valued functions. However we can apply the same principle in order to find the derivatives of the cross entropy with respect to the weights \\(W^{(i)}\\). 
@@ -243,7 +238,6 @@ In this discussion we will neglect the biases for simplicity, as the core of the
 Once again, we start from the output of the function and then work our way backwards along the graph to the inputs. For the weights closest to the output:
 
 {% include image.html name="dw1.png" %}
-![dw1.png](assets/dw1.png)
 
 We want to calculate the quantity \\(\frac{dS}{dW^{(1)}}\\), which is a matrix-valued quantity (or vector-valued, since you can use a single index rather than two indices to list all the weights). Working backwards using the chain rule we have in matrix notation:
 
@@ -260,7 +254,6 @@ $$ \frac{dS}{d Z^{(1)}} = \Delta^{(1)} = \hat{Y} - Y \\
 
 Now we move on to the next layer:
 
-![dw2.png](assets/dw2.png)
 {%include image.html name="dw2.png" %}
 
 We notice that this path overlaps with the previous path used to calculate \\(\frac{dS}{dW^{(1)}}\\), so we can reuse results from the previous discussion in the calculation of \\(\frac{dS}{dW^{(1)}}\\), for the calculation of \\(\frac{dS}{dW^{(0)}}\\). We have then in matrix notation:
@@ -316,7 +309,6 @@ We see that working from the output layer backwards, we can use the derivatives 
 One final point to note is that in the previous discussion, we have neglected to discuss the treatment of the derivative of the cost function with respect to the biases. In order to account for the bias weights in the network, we have to make a change to the expression for \\(\frac{d Z^{(l+1)}}{d X^{(l+1)}}\\), when calculating the derivative of the cost function with respect to the weights \\(W^{(l)}\\), ie \\(\frac{d S}{d W^{(l)}}\\). We can proceed by making the observation that the bias nodes (which always have an activation value of one) have no parent node and are always do not have a connection to the previous layer of nodes. In other words, the backpropagation does not 'propagate' the bias weight gradients to the previous layers. More explicitly, the term \\(\frac{d Z^{(l+1)}}{d X^{(l+1)}}\\) has to be restricted to all elements other than bias nodes:
 
 {% include image.html name="xrestrict.png" %}
-![xrestrict.png](assets/xrestrict.png)
 
 Here, \\(d_{l+1}\\) is the number of nodes excluding the bias node in the l-th hidden layer. Instead of taking the derivative with respect to \\(X^{(l+1)}\\), we take the derivative \\(\frac{d Z^{(l+1)}}{d X'^{(l+1)}}\\):
 
