@@ -263,7 +263,7 @@ $$\begin{aligned}
 &= \Delta^{(1)} \frac{d Z^{(1)}}{d X^{(1)}} \frac{d X^{(1)}}{d Z^{(0)}} \frac{d Z^{(0)}}{d W^{(0)}} 
 \end{aligned}$$
 
-From here we can proceed to obtain expressions for each derivative. On point to note is the derivative of the ReLU function. Technically speaking, the ReLU function is not a continuous function - for ReLU$(x)$ its derivative is undefined at \\(x=0\\). We will adopt the following convention for the derivative of the ReLU function:
+From here we can proceed to obtain expressions for each derivative. On point to note is the derivative of the ReLU function. Technically speaking, the ReLU function is not a continuous function - for ReLU\\((x)\\) its derivative is undefined at \\(x=0\\). We will adopt the following convention for the derivative of the ReLU function:
 
 $$ \frac{d ReLU(x)}{d x} =
 \begin{cases} &1  &x > 0\\
