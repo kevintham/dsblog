@@ -5,7 +5,7 @@ layout: post
 ---
 
   
-In this project we will go through the some of the details of implementing an Artificial Neural Network (ANN), including the derivation of the backpropagation algorithm and its vectorization for greater efficiency. Following that we will apply the ANN to an artificial dataset in order to try and understand how having hidden layers allows ANNs to classify datasets with complicated and nonlinear decision boundaries.
+In this article we will go through the some of the details of implementing an Artificial Neural Network (ANN), including the derivation of the backpropagation algorithm and its vectorization for greater efficiency. Following that in a future article we will apply the ANN to an artificial dataset in order to try and understand how having hidden layers allows ANNs to classify datasets with complicated and nonlinear decision boundaries.
 
 ## Introduction to ANNs
 
