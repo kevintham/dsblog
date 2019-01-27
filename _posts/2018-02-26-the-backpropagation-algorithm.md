@@ -378,7 +378,7 @@ The next method, mini-batch gradient descent, is a middle ground between the two
 
 $$S^{(i)} = - \sum^{N/m}_{n_{i}} \sum_{\alpha} y_{n_{i},\alpha} \log \hat{y}_{n_{i},\alpha}$$
 
-where \\(i\\) is the mini-batch number, \\(N\\) is the total number of observations, \\(m\\) is the total number of mini-batches and \\(N/m\\) is the number of observations in each mini-batch assuming each mini-batch has the same number of observations. \\(n_{i}\\) labels the observations within the $i$-th mini-batch. In this manner, mini-batch gradient descent tries to take the best of both worlds by:
+where \\(i\\) is the mini-batch number, \\(N\\) is the total number of observations, \\(m\\) is the total number of mini-batches and \\(N/m\\) is the number of observations in each mini-batch assuming each mini-batch has the same number of observations. \\(n_{i}\\) labels the observations within the \\(i\\)-th mini-batch. In this manner, mini-batch gradient descent tries to take the best of both worlds by:
 
 * Enabling the algorithm to jump out of local minima by sampling randomly arranged data one mini-batch at a time
 * Enabling the algorithm to make use of vectorization libraries for better efficiency
